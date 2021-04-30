@@ -7,6 +7,7 @@ public final class LinkedQueue<T> implements QueueInterface<T>
 {
 	private Node firstNode; // References node at front of queue
 	private Node lastNode; // References node at back of queue
+	private int numberOfEntries = 0;
 	
 	public LinkedQueue()
 	{
@@ -22,6 +23,7 @@ public final class LinkedQueue<T> implements QueueInterface<T>
 		else
 			lastNode.setNextNode(newNode);
 		lastNode = newNode;
+		numberOfEntries++;
 	} // end enqueue
 	
 	public T getFront()
@@ -38,6 +40,7 @@ public final class LinkedQueue<T> implements QueueInterface<T>
 		firstNode = firstNode.getNextNode();
 		if (firstNode == null)
 			lastNode = null;
+		numberOfEntries--;
 		return front;
 	} // end dequeue
 	
@@ -51,6 +54,24 @@ public final class LinkedQueue<T> implements QueueInterface<T>
 		firstNode = null;
 		lastNode = null;
 	} // end clear
+	
+	public T[] toArray()
+	{
+		// The cast is safe because the new array contains null entries
+		@SuppressWarnings("unchecked")
+		T[] result = (T[])new Object[numberOfEntries]; //Unchecked cast
+		
+		int index = 0;
+		Node currentNode = firstNode;
+		while ((index < numberOfEntries) && (currentNode != null))
+		{
+			result[index] = (T) currentNode.getData();
+			index++;
+			currentNode = currentNode.getNextNode();
+		} // end while
+		
+		return result;
+	} // end toArray
 	
 	private class Node<T> 
 	{

@@ -17,8 +17,7 @@ public class DirectedGraph<T> implements GraphInterface<T>
 	
 	public boolean addVertex(T vertexLabel)
 	{
-		VertexInterface<T> addOutcome =
-		vertices.add(vertexLabel, new Vertex<>(vertexLabel));
+		VertexInterface<T> addOutcome = vertices.add(vertexLabel, new Vertex<>(vertexLabel));
 		return addOutcome == null; // Was addition to dictionary successful?
 	} // end addVertex
 	
@@ -103,8 +102,7 @@ public class DirectedGraph<T> implements GraphInterface<T>
 		while (!vertexQueue.isEmpty())
 		{
 			VertexInterface<T> frontVertex = vertexQueue.dequeue();
-			Iterator<VertexInterface<T>> neighbors =
-			frontVertex.getNeighborIterator();
+			Iterator<VertexInterface<T>> neighbors = frontVertex.getNeighborIterator();
 			while (neighbors.hasNext())
 			{
 				VertexInterface<T> nextNeighbor = neighbors.next();
@@ -160,5 +158,39 @@ public class DirectedGraph<T> implements GraphInterface<T>
 		} // end while
 		return pathLength;
 	} // end getShortestPath
+
+	public QueueInterface<T> getDepthFirstTraversal(T origin) {
+		resetVertices();
+		QueueInterface<T> traversalOrder = new LinkedQueue<>();
+		StackInterface<VertexInterface<T>> vertexStack = (StackInterface<VertexInterface<T>>) new LinkedStack<T>();
+		VertexInterface<T> originVertex = vertices.getValue(origin);
+		originVertex.visit();
+		traversalOrder.enqueue(origin);
+		vertexStack.push(originVertex);
+		while (!vertexStack.isEmpty())
+		{
+			VertexInterface<T> topVertex = vertexStack.peek();
+			Iterator<VertexInterface<T>> neighbors = topVertex.getNeighborIterator();
+			if (topVertex.getUnvisitedNeighbor() != null)
+			{
+				VertexInterface<T> nextNeighbor = topVertex.getUnvisitedNeighbor();
+				nextNeighbor.visit();
+				traversalOrder.enqueue(nextNeighbor.getLabel());
+				vertexStack.push(nextNeighbor);
+			}
+			else
+			{
+				vertexStack.pop();
+			}
+		}
+		return traversalOrder;
+	}
+
+	public StackInterface<T> getTopologicalOrder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 	
 } // end DirectedGraph

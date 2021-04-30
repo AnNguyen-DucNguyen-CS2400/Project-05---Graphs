@@ -25,4 +25,6 @@ public interface QueueInterface<T>
 	
 	/** Removes all entries from this queue. */
 	public void clear();
+
+	public T[] toArray();
 } // end QueueInterface
