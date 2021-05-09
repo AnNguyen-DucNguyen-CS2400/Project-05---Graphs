@@ -17,21 +17,22 @@ public class GraphTesting {
 		graph.addEdge('H','I');
 		graph.addEdge('I','F');
 		
+			
 		QueueInterface<Character> bdf = graph.getBreadthFirstTraversal('A');
 		Object[] bdfArray = bdf.toArray();
-		System.out.print("BreadthFirstTraveral: ");
+		System.out.print("Breadth-First Traveral: ");
 		for (int i = 0; i < bdfArray.length; i++)
 		{
-			System.out.print(bdfArray[i]);
+			System.out.print(bdfArray[i] + " ");
 		}
 		System.out.println();
 		
 		QueueInterface<Character> dft = graph.getDepthFirstTraversal('A');
 		Object[] dftArray = dft.toArray();
-		System.out.print("DepthFirstTraveral: ");
+		System.out.print("Depth-First Traveral: ");
 		for (int i = 0; i < dftArray.length; i++)
 		{
-			System.out.print(dftArray[i]);
+			System.out.print(dftArray[i] + " ");
 		}
 		
 	}
